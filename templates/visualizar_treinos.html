@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Meus Treinos - Academia</title>
+<style>
+  /* Base inspirado no seu primeiro template */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #111 0%, #222 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    padding: 20px 50px;
+    background: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffb300;
+    letter-spacing: 2px;
+  }
+
+  nav a {
+    color: #fff;
+    margin-left: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+  }
+  nav a:hover {
+    color: #ffb300;
+  }
+
+  .container {
+    max-width: 850px;
+    width: 90%;
+    margin: 40px auto;
+    background: #1c1c1c;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #ffb300;
+  }
+
+  .treino-card {
+    background: #2a2a2a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .treino-card h2 {
+    margin-top: 0;
+    color: #ffb300;
+    margin-bottom: 15px;
+  }
+
+  .exercicio-lista {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .exercicio-lista li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #1e1e1e;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+
+  .exercicio-lista img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #ffb300;
+    flex-shrink: 0;
+  }
+
+  .exercicio-info {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+  }
+
+  .exercicio-info strong {
+    font-size: 1.1rem;
+  }
+
+  .exercicio-info span {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+
+  .footer {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.9rem;
+    margin: 40px 0 20px 0;
+  }
+
+  p.sem-treinos {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #bbb;
+    margin-top: 50px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">ACADEMIA</div>
+  <nav>
+    <a href="/tela_inicial">HOME</a>
+  </nav>
+</div>
+
+<div class="container">
+  <h1>Meus Treinos</h1>
+
+  {% if treinos | length == 0 %}
+    <p class="sem-treinos">Você ainda não tem treinos salvos.</p>
+  {% else %}
+    {% for treino in treinos %}
+      <div class="treino-card">
+        <h2>{{ treino.nome }}</h2>
+        <ul class="exercicio-lista">
+          {% for exercicio in treino.exercicios %}
+            <li>
+              {% if exercicio.gif_url %}
+                <img src="{{ exercicio.gif_url }}" alt="{{ exercicio.nome }}">
+              {% else %}
+                <img src="/static/default_exercicio.png" alt="Sem imagem">
+              {% endif %}
+              <div class="exercicio-info">
+                <strong>{{ exercicio.nome }}</strong>
+                <span>Séries: {{ exercicio.series }}, Repetições: {{ exercicio.repeticoes }}</span>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<div class="footer">
+  ACADEMIA • Avenida das Letras, 384
+</div>
+
+</body>
+</html>

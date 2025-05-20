@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Monte seu Treino | Academia</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #111 0%, #222 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    padding: 20px 50px;
+    background: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffb300;
+    letter-spacing: 2px;
+}
+
+nav a {
+    color: #fff;
+    margin-left: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+}
+nav a:hover {
+    color: #ffb300;
+}
+
+.container {
+    max-width: 850px;
+    width: 90%;
+    margin: 40px auto;
+    background: #1c1c1c;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+}
+
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #ffb300;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #ffb300;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    background: #2a2a2a;
+    color: #fff;
+    border: 2px solid #444;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    outline: none;
+    transition: border 0.2s;
+}
+input[type="text"]:focus {
+    border-color: #ffb300;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #ffb300;
+    border-bottom: 1px solid #ffb30033;
+    padding-bottom: 5px;
+}
+
+.exercise-group {
+    background: #2a2a2a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.exercise-group input[type="checkbox"] {
+    accent-color: #ffb300;
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.exercise-group label {
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.exercise-group img {
+    margin-top: 12px;
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 14px;
+}
+
+.input-box {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.input-box input[type="number"] {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #1e1e1e;
+    border: 1px solid #555;
+    color: #fff;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+.input-box input:focus {
+    border-color: #ffb300;
+}
+
+.btn {
+    margin-top: 30px;
+    background: #ffb300;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    color: #000;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s ease-in-out;
+}
+.btn:hover {
+    background: #e69900;
+}
+
+.footer {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.9rem;
+    margin: 40px 0 20px 0;
+}
+/* Checkbox personalizada */
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-wrapper label {
+    position: relative;
+    padding-left: 32px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1.05rem;
+}
+
+.checkbox-wrapper label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffb300;
+    border-radius: 5px;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label::before {
+    background-color: #ffb300;
+    border-color: #ffb300;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 10px;
+    width: 6px;
+    height: 12px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">ACADEMIA</div>
+    <nav>
+        <a href="/tela_inicial">HOME</a>
+    </nav>
+</div>
+
+<div class="container">
+    <h1>Monte seu treino personalizado</h1>
+    
+    <form method="post" action="/salvar_treino">
+        <label for="nome_treino">Nome do Treino</label>
+        <input type="text" id="nome_treino" name="nome_treino" placeholder="Ex: Treino de Peito e Tríceps" required>
+
+       {% for grupo in ["superior", "inferior", "costas"] %}
+  <h2>{{ grupo | capitalize }}</h2>
+  {% set count = 0 %}
+  {% for exercicio in exercicios %}
+    {% if exercicio.grupo_muscular == grupo and count < 6 %}
+      <div class="exercise-group">
+        <input type="checkbox" name="exercicios" value="{{ exercicio.id }}">
+        <label>{{ exercicio.nome }}</label><br>
+
+        {% if exercicio.gif_url %}
+          <img src="{{ exercicio.gif_url }}" alt="GIF de {{ exercicio.nome }}">
+        {% endif %}
+
+        Séries:
+        <input type="number" name="series_{{ exercicio.id }}" min="1" max="10" value="3">
+        Repetições:
+        <input type="number" name="reps_{{ exercicio.id }}" min="1" max="30" value="10">
+      </div>
+      {% set count = count + 1 %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+        <input type="hidden" name="exercicios_json" id="exercicios-json">
+        <button type="submit" class="btn">Salvar Treino</button>
+    </form>
+</div>
+
+<div class="footer">
+    ACADEMIA • Avenida das Letras, 384
+</div>
+
+<script>
+document.querySelector("form").addEventListener("submit", function(event) {
+    const selecionados = [];
+
+    document.querySelectorAll("input[type='checkbox']:checked").forEach(cb => {
+        const id = cb.value;
+        const series = document.querySelector(`input[name='series_${id}']`)?.value || 3;
+        const reps = document.querySelector(`input[name='reps_${id}']`)?.value || 10;
+        selecionados.push({ id: parseInt(id), series: parseInt(series), repeticoes: parseInt(reps) });
+    });
+
+    document.getElementById("exercicios-json").value = JSON.stringify(selecionados);
+});
+</script>
+
+</body>
+</html>

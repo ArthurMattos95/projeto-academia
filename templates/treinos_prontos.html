@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Treinos Prontos - Academia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: #121212;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .conteudo-central {
+      max-width: 1200px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      color: #ffdd57;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .carrossel-treinos {
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 1rem 0;
+      scroll-snap-type: x mandatory;
+    }
+
+    .treino-card {
+      min-width: 300px;
+      background: #1e1e1e;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+      padding: 1.5rem;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+
+    .treino-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(255, 221, 87, 0.6);
+    }
+
+    .treino-card h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: #ffdd57;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .treino-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .treino-card li {
+      display: flex;
+      align-items: center;
+      background: #2a2a2a;
+      border-radius: 10px;
+      padding: 0.6rem;
+      margin-bottom: 0.7rem;
+      gap: 1rem;
+      transition: background 0.2s;
+      flex-wrap: wrap;
+    }
+
+    .treino-card li:hover {
+      background: #333;
+    }
+
+    .treino-card img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #ffdd57;
+      flex-shrink: 0;
+    }
+
+    .treino-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .treino-info strong {
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .treino-info span {
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+
+    .treino-card p {
+      color: #aaa;
+    }
+
+    .carrossel-treinos::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .carrossel-treinos::-webkit-scrollbar-track {
+      background: #222;
+      border-radius: 10px;
+    }
+
+    .carrossel-treinos::-webkit-scrollbar-thumb {
+      background: #ffdd57;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        align-items: flex-start;
+        padding-top: 3rem;
+      }
+
+      .treino-card {
+        min-width: 90%;
+      }
+
+      .treino-card img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="conteudo-central">
+    <h1>Exercícios por Grupo Muscular</h1>
+
+    {% for grupo in grupos %}
+      <section class="carrossel-treinos">
+        <div class="treino-card">
+          <h2>{{ grupo | capitalize }}</h2>
+          {% set exercicios = exercicios_por_grupo[grupo] %}
+          {% if exercicios is defined and exercicios | length > 0 %}
+            <ul>
+              {% for exercicio in exercicios %}
+                <li>
+                  {% if exercicio.gif_url %}
+                    <img src="{{ exercicio.gif_url }}" alt="{{ exercicio.nome }}" />
+                  {% endif %}
+                  <div class="treino-info">
+                    <strong>{{ exercicio.nome }}</strong>
+                    <span>{{ exercicio.series }} séries - {{ exercicio.repeticoes }} repetições</span>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>Nenhum exercício disponível para este grupo.</p>
+          {% endif %}
+        </div>
+      </section>
+    {% endfor %}
+  </div>
+</body>
+</html>
+<!--
+  Este arquivo HTML exibe uma lista de exercícios agrupados por grupo muscular.
+  Cada grupo muscular tem um carrossel que mostra os exercícios disponíveis, com imagens e informações detalhadas.
+  O design é responsivo e se adapta a diferentes tamanhos de tela.

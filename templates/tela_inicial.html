@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Academia</title>
+
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: transparent;
+      position: absolute;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: bold;
+    }
+
+    /* Hero section */
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7)),
+                  url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero-content h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+
+    .highlight {
+      color: orange;
+    }
+
+    /* Botões */
+    .buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      background-color: #a87100;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      border: 2px solid white;
+    }
+
+    .btn:hover {
+      background-color: white;
+      color: #a87100;
+    }
+
+    /* Footer */
+    footer {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      width: 100%;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">ACADEMIA</div>
+    <nav class="nav-links">
+      <a href="#">HOME</a>
+      <a href="meus_treinos">TREINOS SALVOS</a>
+
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Treinar não fica mais <span class="highlight">fácil</span>, você que fica <span class="highlight">MELHOR!</span></h1>
+      <p>SE INSCREVA AGORA E MUDE DE VIDA</p>
+      <div class="buttons">
+        <a href="/montar_treino" class="btn">MONTE SEU TREINO</a>
+        <a href="/escolher_treinos_prontos" class="btn">ESCOLHER TREINOS PRONTOS</a>
+      </div>
+    </div>
+    <footer>
+      <p><strong>ACADEMIA</strong></p>
+      <p>Avenida das letras N°384</p>
+    </footer>
+  </section>
+
+</body>
+</html>

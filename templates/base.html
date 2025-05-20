@@ -1,0 +1,17 @@
+{# templates/base.html #}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Minha App{% endblock %}</title>
+    <script>
+        // Se a página for recarregada (F5, botão de atualizar)
+        if (performance.navigation.type === 1) {
+            window.location.href = "/tela_inicial";
+        }
+    </script>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>
