@@ -31,7 +31,7 @@
   .logo {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #ffb300;
+    color: #0FC2C0;
     letter-spacing: 2px;
   }
 
@@ -43,7 +43,7 @@
     transition: color 0.2s ease-in-out;
   }
   nav a:hover {
-    color: #ffb300;
+    color: #0FC2C0;
   }
 
   .container {
@@ -60,7 +60,7 @@
     text-align: center;
     font-size: 2rem;
     margin-bottom: 30px;
-    color: #ffb300;
+    color: #0FC2C0;
   }
 
   .treino-card {
@@ -69,11 +69,12 @@
     padding: 20px;
     margin-bottom: 25px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    position: relative; /* para posicionar botão */
   }
 
   .treino-card h2 {
     margin-top: 0;
-    color: #ffb300;
+    color: #0FC2C0;
     margin-bottom: 15px;
   }
 
@@ -97,7 +98,7 @@
     height: 70px;
     object-fit: cover;
     border-radius: 8px;
-    border: 2px solid #ffb300;
+    border: 2px solid #0FC2C0;
     flex-shrink: 0;
   }
 
@@ -114,6 +115,28 @@
   .exercicio-info span {
     font-size: 0.9rem;
     color: #ccc;
+  }
+
+  /* Botão editar */
+  .btn-editar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #0FC2C0;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 20px;
+    color: #000;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-editar:hover {
+    background: #0FC2C0;
   }
 
   .footer {
@@ -134,7 +157,7 @@
 <body>
 
 <div class="header">
-  <div class="logo">ACADEMIA</div>
+  <div class="logo">Corpo Zen</div>
   <nav>
     <a href="/tela_inicial">HOME</a>
   </nav>
@@ -149,6 +172,10 @@
     {% for treino in treinos %}
       <div class="treino-card">
         <h2>{{ treino.nome }}</h2>
+
+        <!-- Botão Editar -->
+        <a href="/editar_treinos_salvos?id={{ treino.id }}" class="btn-editar">Editar</a>
+
         <ul class="exercicio-lista">
           {% for exercicio in treino.exercicios %}
             <li>
@@ -170,7 +197,7 @@
 </div>
 
 <div class="footer">
-  ACADEMIA • Avenida das Letras, 384
+  Corpo Zen • Avenida das Letras, 384
 </div>
 
 </body>
