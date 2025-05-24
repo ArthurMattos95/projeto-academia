@@ -2,8 +2,6 @@ use actix_web::{web, App, HttpServer, middleware};
 use actix_files::Files;
 use dotenv::dotenv;
 use tera::Tera;
-use sqlx::PgPool;
-use std::env;
 
 mod db;
 mod handlers;

@@ -192,10 +192,9 @@
           </form>
         </h2>
 
-        
-
-        <form method="post" action="/salvar_edicao_treinos">
-          <input type="hidden" name="treino_id" value="{{ treino.id }}">
+        <!-- Remova ou comente o formulário tradicional -->
+        <!-- <form method="post" action="/salvar_edicao_treinos"> -->
+          <input type="hidden" id="treino-id-{{ treino.id }}" value="{{ treino.id }}">
           <ul class="exercicio-lista">
             {% for exercicio in treino.exercicios %}
               <li style="position: relative;">
@@ -215,16 +214,15 @@
                     <input type="number" name="repeticoes[{{ exercicio.id }}]" value="{{ exercicio.repeticoes }}" min="1" max="50" required>
                   </label>
                 </div>
-
-                <!-- Botão para deletar exercício usando AJAX -->
                 <button type="button" onclick="deletarExercicio({{ treino.id }}, {{ exercicio.id }})" style="position: absolute; top: 10px; right: 10px; background:#e74c3c; border:none; color:#fff; border-radius:50%; width:30px; height:30px; cursor:pointer; font-weight:bold; font-size:18px; line-height: 1;">
                   ×
                 </button>
               </li>
             {% endfor %}
           </ul>
-          <button type="submit" class="btn-salvar">Salvar Alterações</button>
-        </form>
+          <!-- Substitua o botão de salvar por este: -->
+          <button onclick="salvarEdicaoTreino({{ treino.id }})" class="btn-salvar">Salvar Alterações</button>
+        <!-- </form> -->
       </div>
     {% endfor %}
   {% endif %}
@@ -245,9 +243,36 @@ async function deletarExercicio(treinoId, exercicioId) {
   });
 
   if (response.ok) {
-    location.reload(); // Atualiza a página após excluir
+    location.reload();
   } else {
     alert('Erro ao deletar exercício');
+  }
+}
+
+// Função para salvar as edições por AJAX/JSON
+async function salvarEdicaoTreino(treinoId) {
+  const series = {};
+  const repeticoes = {};
+  // Pega todos os inputs de séries e repetições
+  document.querySelectorAll('input[name^="series["]').forEach(input => {
+    const match = input.name.match(/\[(\d+)\]/);
+    if (match) series[match[1]] = parseInt(input.value);
+  });
+  document.querySelectorAll('input[name^="repeticoes["]').forEach(input => {
+    const match = input.name.match(/\[(\d+)\]/);
+    if (match) repeticoes[match[1]] = parseInt(input.value);
+  });
+
+  const response = await fetch('/salvar_edicao_treinos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ treino_id: treinoId, series, repeticoes })
+  });
+
+  if (response.ok) {
+     window.location.href = "/meus_treinos"; // <--- AQUI É ONDE VOCÊ ALTERA
+  } else {
+    alert('Erro ao salvar alterações');
   }
 }
 </script>

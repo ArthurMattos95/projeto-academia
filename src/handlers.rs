@@ -1,4 +1,4 @@
-use actix_web::{post, web, HttpResponse, Responder, http::header, Error};
+use actix_web::{post, web, HttpResponse, Error};
 use sqlx::PgPool;
 use crate::models::{Usuario, Exercicio, ExercicioDetalhado, TreinoDetalhado};
 use tera::{Tera, Context};
@@ -312,7 +312,7 @@ pub struct SalvarEdicaoForm {
 #[post("/salvar_edicao_treinos")]
 pub async fn salvar_edicao_treinos(
     db_pool: web::Data<PgPool>,
-    form: web::Form<SalvarEdicaoForm>,
+    form: web::Json<SalvarEdicaoForm>,
 ) -> Result<HttpResponse, Error> {
     let usuario_id = 1; // Ajuste conforme sua autenticação
 
@@ -355,7 +355,7 @@ pub async fn salvar_edicao_treinos(
     }
 
     Ok(HttpResponse::SeeOther()
-        .append_header(("Location", "/editar_treinos_salvos"))
+        .append_header(("Location", "/meus_treinos"))
         .finish())
 }
 
